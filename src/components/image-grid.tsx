@@ -15,8 +15,12 @@ function ImageGrid({
 
     return (
         <div className="grid grid-cols-4 gap-4">
-            {[getColumns(0), getColumns(1), getColumns(2), getColumns(3)].map(column => {
-                return <div className="flex flex-col gap-4">{column.map(getImage)}</div>;
+            {[getColumns(0), getColumns(1), getColumns(2), getColumns(3)].map((column, i) => {
+                return (
+                    <div key={i} className="flex flex-col gap-4">
+                        {column.map(getImage)}
+                    </div>
+                );
             })}
         </div>
     );
