@@ -1,22 +1,18 @@
 import UploadButton from "./upload-button";
-import {v2 as cloudinary} from "cloudinary";
+import cloudinary from "cloudinary";
 import CloudinaryImage from "./cloudinary-image";
 
-type SearchResult = {
+export type SearchResult = {
     public_id: "string";
+    tags: string[];
 };
 
 export default async function GalleryPage() {
-    cloudinary.config({
-        cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-        api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-        api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
-    });
-
-    const result = (await cloudinary.search
+    const result = (await cloudinary.v2.search
         .expression("resource_type:image")
+        .with_field("tags")
         .sort_by("created_at", "desc")
-        .max_results(5)
+        .max_results(1)
         .execute()) as {resources: SearchResult[]};
 
     return (
@@ -31,7 +27,7 @@ export default async function GalleryPage() {
                         return (
                             <CloudinaryImage
                                 key={result.public_id}
-                                publicId={result.public_id}
+                                imageData={result}
                             ></CloudinaryImage>
                         );
                     })}
