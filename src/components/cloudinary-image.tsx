@@ -2,10 +2,11 @@
 
 import {StarIcon} from "@/components/icons/StarIcon";
 import {CldImage} from "next-cloudinary";
-import {setAsFavoriteAction} from "./actions";
-import {SearchResult} from "./page";
+import {setAsFavoriteAction} from "../app/gallery/actions";
+import {SearchResult} from "../app/gallery/page";
 import {useState, useTransition} from "react";
 import {FullStarIcon} from "@/components/icons/FullStarIcon";
+import ImageMenu from "./image-menu";
 
 export default function CloudinaryImage(
     props: any & {
@@ -28,7 +29,7 @@ export default function CloudinaryImage(
             />
             {isFavorited ? (
                 <FullStarIcon
-                    className="w-8 h-8 absolute top-2 right-2 hover:text-white cursor-pointer"
+                    className="w-8 h-8 absolute top-2 left-2 hover:text-white cursor-pointer"
                     onClick={() => {
                         onUnfavorite?.(imageData);
                         setIsFavorite(false);
@@ -39,7 +40,7 @@ export default function CloudinaryImage(
                 />
             ) : (
                 <StarIcon
-                    className="w-8 h-8 absolute top-2 right-2 hover:text-yellow-500 cursor-pointer"
+                    className="w-8 h-8 absolute top-2 left-2 hover:text-yellow-500 cursor-pointer"
                     onClick={() => {
                         setIsFavorite(true);
                         startTransition(() => {
@@ -48,6 +49,7 @@ export default function CloudinaryImage(
                     }}
                 />
             )}
+            <ImageMenu></ImageMenu>
         </div>
     );
 }
