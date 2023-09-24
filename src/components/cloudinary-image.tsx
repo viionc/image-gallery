@@ -18,7 +18,7 @@ export default function CloudinaryImage(
     const [transition, startTransition] = useTransition();
     const [isFavorited, setIsFavorite] = useState(imageData.tags.includes("favorite"));
     return (
-        <div className="relative">
+        <div className="relative" key={imageData.public_id}>
             <CldImage
                 key={imageData.public_id}
                 width="400"

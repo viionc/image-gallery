@@ -34,12 +34,7 @@ export default async function GalleryPage({
                 <ImageGrid
                     images={results.resources}
                     getImage={(image: SearchResult) => {
-                        return (
-                            <CloudinaryImage
-                                key={image.public_id}
-                                imageData={image}
-                            ></CloudinaryImage>
-                        );
+                        return <CloudinaryImage imageData={image}></CloudinaryImage>;
                     }}
                 ></ImageGrid>
             </div>
