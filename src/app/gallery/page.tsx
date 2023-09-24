@@ -1,37 +1,41 @@
-"use client";
-import {Button} from "@/components/ui/button";
-import {CldUploadButton} from "next-cloudinary";
+import UploadButton from "./upload-button";
+import {v2 as cloudinary} from "cloudinary";
+import CloudinaryImage from "./cloudinary-image";
 
-export default function GalleryPage() {
+type SearchResult = {
+    public_id: "string";
+};
+
+export default async function GalleryPage() {
+    cloudinary.config({
+        cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+        api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
+    });
+
+    const result = (await cloudinary.search
+        .expression("resource_type:image")
+        .sort_by("created_at", "desc")
+        .max_results(5)
+        .execute()) as {resources: SearchResult[]};
+
     return (
         <section>
-            <div className="flex justify-between">
-                <h1 className="text-4xl font-bold">Gallery</h1>
-                <Button asChild>
-                    <div className="flex gap-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
-                            />
-                        </svg>
-
-                        <CldUploadButton
-                            uploadPreset="x4m3slcy"
-                            onUpload={result => {
-                                // setImageId((result as UploadResult).info.public_id);
-                            }}
-                        />
-                    </div>
-                </Button>
+            <div className="flex flex-col gap-8">
+                <div className="flex justify-between">
+                    <h1 className="text-4xl font-bold">Gallery</h1>
+                    <UploadButton />
+                </div>
+                <div className="grid grid-cols-4 gap-4">
+                    {result.resources.map(result => {
+                        return (
+                            <CloudinaryImage
+                                key={result.public_id}
+                                publicId={result.public_id}
+                            ></CloudinaryImage>
+                        );
+                    })}
+                </div>
             </div>
         </section>
     );
