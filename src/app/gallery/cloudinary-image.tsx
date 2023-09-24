@@ -7,7 +7,7 @@ import {SearchResult} from "./page";
 import {useTransition} from "react";
 import {FullStarIcon} from "@/components/icons/FullStarIcon";
 
-export default function CloudinaryImage(props: any & {imageData: SearchResult}) {
+export default function CloudinaryImage(props: any & {imageData: SearchResult; path: string}) {
     const {imageData} = props;
     const [transition, startTransition] = useTransition();
     const isFavorited = imageData.tags.includes("favorite");
@@ -26,7 +26,7 @@ export default function CloudinaryImage(props: any & {imageData: SearchResult}) 
                     className="w-8 h-8 absolute top-2 right-2 hover:text-white cursor-pointer"
                     onClick={() => {
                         startTransition(() => {
-                            setAsFavoriteAction(imageData.public_id, isFavorited);
+                            setAsFavoriteAction(imageData.public_id, isFavorited, props.path);
                         });
                     }}
                 />
@@ -35,7 +35,7 @@ export default function CloudinaryImage(props: any & {imageData: SearchResult}) 
                     className="w-8 h-8 absolute top-2 right-2 hover:text-yellow-500 cursor-pointer"
                     onClick={() => {
                         startTransition(() => {
-                            setAsFavoriteAction(imageData.public_id, isFavorited);
+                            setAsFavoriteAction(imageData.public_id, isFavorited, props.path);
                         });
                     }}
                 />
