@@ -4,7 +4,6 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {CldImage} from "next-cloudinary";
-import {useAmp} from "next/amp";
 import React, {useState} from "react";
 
 function EditPage({

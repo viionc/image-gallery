@@ -1,6 +1,5 @@
 import cloudinary from "cloudinary";
 import {AlbumCard} from "./album-card";
-import {useEffect, useState} from "react";
 import ForceRefresh from "@/components/force-refresh";
 
 export type Folder = {name: string; path: string};
