@@ -9,6 +9,8 @@ import {
 import {AddToAlbumDialog} from "./add-to-album-dialog";
 import {SearchResult} from "@/app/gallery/page";
 import {Button} from "./ui/button";
+import Link from "next/link";
+import {Pencil} from "lucide-react";
 
 function ImageMenu({image}: {image: SearchResult}) {
     const [open, setOpen] = useState(false);
@@ -26,6 +28,18 @@ function ImageMenu({image}: {image: SearchResult}) {
                             image={image}
                             onClose={() => setOpen(false)}
                         ></AddToAlbumDialog>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Button
+                            variant="ghost"
+                            asChild
+                            className="cursor-pointer flex justify-start p-2"
+                        >
+                            <Link href={`/edit?publicId=${encodeURIComponent(image.public_id)}`}>
+                                <Pencil className="mr-2 w-4 h-4"></Pencil>
+                                Edit
+                            </Link>
+                        </Button>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

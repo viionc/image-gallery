@@ -28,10 +28,10 @@ export function AddToAlbumDialog({image, onClose}: {image: SearchResult; onClose
             }}
         >
             <DialogTrigger asChild>
-                <div className="flex flex-row gap-4 cursor-pointer">
-                    <FolderPlus />
+                <Button variant="ghost" className="cursor-pointer flex justify-start p-2">
+                    <FolderPlus className="mr-2 w-4 h-4" />
                     Add To Album
-                </div>
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
