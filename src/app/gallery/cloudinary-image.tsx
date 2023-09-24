@@ -4,13 +4,18 @@ import {StarIcon} from "@/components/icons/StarIcon";
 import {CldImage} from "next-cloudinary";
 import {setAsFavoriteAction} from "./actions";
 import {SearchResult} from "./page";
-import {useTransition} from "react";
+import {useState, useTransition} from "react";
 import {FullStarIcon} from "@/components/icons/FullStarIcon";
 
-export default function CloudinaryImage(props: any & {imageData: SearchResult; path: string}) {
-    const {imageData} = props;
+export default function CloudinaryImage(
+    props: any & {
+        imageData: SearchResult;
+        onUnfavorite?: (unfavoritedResources: SearchResult) => void;
+    }
+) {
+    const {imageData, onUnfavorite} = props;
     const [transition, startTransition] = useTransition();
-    const isFavorited = imageData.tags.includes("favorite");
+    const [isFavorited, setIsFavorite] = useState(imageData.tags.includes("favorite"));
     return (
         <div className="relative">
             <CldImage
@@ -25,8 +30,10 @@ export default function CloudinaryImage(props: any & {imageData: SearchResult; p
                 <FullStarIcon
                     className="w-8 h-8 absolute top-2 right-2 hover:text-white cursor-pointer"
                     onClick={() => {
+                        onUnfavorite?.(imageData);
+                        setIsFavorite(false);
                         startTransition(() => {
-                            setAsFavoriteAction(imageData.public_id, isFavorited, props.path);
+                            setAsFavoriteAction(imageData.public_id, true);
                         });
                     }}
                 />
@@ -34,8 +41,9 @@ export default function CloudinaryImage(props: any & {imageData: SearchResult; p
                 <StarIcon
                     className="w-8 h-8 absolute top-2 right-2 hover:text-yellow-500 cursor-pointer"
                     onClick={() => {
+                        setIsFavorite(true);
                         startTransition(() => {
-                            setAsFavoriteAction(imageData.public_id, isFavorited, props.path);
+                            setAsFavoriteAction(imageData.public_id, false);
                         });
                     }}
                 />
