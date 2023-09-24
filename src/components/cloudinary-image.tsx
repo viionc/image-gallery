@@ -49,7 +49,7 @@ export default function CloudinaryImage(
                     }}
                 />
             )}
-            <ImageMenu></ImageMenu>
+            <ImageMenu image={imageData}></ImageMenu>
         </div>
     );
 }
