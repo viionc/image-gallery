@@ -1,5 +1,5 @@
 "use server";
-import {v2 as cloudinary} from "cloudinary";
+import cloudinary from "@/components/cloudinary-config";
 
 export async function setAsFavoriteAction(publicId: string, isFavorited: boolean) {
     isFavorited

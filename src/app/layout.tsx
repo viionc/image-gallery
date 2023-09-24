@@ -6,7 +6,7 @@ import {StarIcon} from "@/components/icons/StarIcon";
 import {FolderIcon} from "lucide-react";
 import GalleryIcon from "@/components/icons/GalleryIcon";
 import Link from "next/link";
-import cloudinary from "cloudinary";
+import cloudinary from "@/components/cloudinary-config";
 import {Folder} from "./albums/page";
 import Image from "next/image";
 const inter = Inter({subsets: ["latin"]});
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 async function SideMenu() {
-    const {folders} = (await cloudinary.v2.api.root_folders()) as {
+    const {folders} = (await cloudinary.api.root_folders()) as {
         folders: Folder[];
     };
 

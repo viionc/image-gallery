@@ -1,4 +1,4 @@
-import cloudinary from "cloudinary";
+import cloudinary from "@/components/cloudinary-config";
 import ImageGrid from "@/components/image-grid";
 import CloudinaryImage from "@/components/cloudinary-image";
 
@@ -8,7 +8,7 @@ export type SearchResult = {
 };
 
 export default async function GalleryPage({params: {albumName}}: {params: {albumName: string}}) {
-    const results = (await cloudinary.v2.search
+    const results = (await cloudinary.search
         .expression(`resource_type:image AND folder=${albumName}`)
         .with_field("tags")
         .sort_by("created_at", "desc")

@@ -1,11 +1,11 @@
-import cloudinary from "cloudinary";
+import cloudinary from "@/components/cloudinary-config";
 import {AlbumCard} from "./album-card";
 import ForceRefresh from "@/components/force-refresh";
 
 export type Folder = {name: string; path: string};
 
 export default async function AlbumsPage() {
-    const {folders} = (await cloudinary.v2.api.root_folders()) as {
+    const {folders} = (await cloudinary.api.root_folders()) as {
         folders: Folder[];
     };
 
